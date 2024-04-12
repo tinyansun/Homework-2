@@ -6,6 +6,7 @@ Please complete the report problem below:
 Provide your profitable path, the amountIn, amountOut value for each swap, and your final reward (your tokenB balance).
 
 > Solution
+
 step 1:
 amountIn: 5 tokenB
 amountOut: 5.655321988655322 tokenA
@@ -36,6 +37,7 @@ final reward: 22.497221806974142 tokenB
 What is slippage in AMM, and how does Uniswap V2 address this issue? Please illustrate with a function as an example.
 
 > Solution
+
 Slippage in the context of Automated Market Makers (AMMs) like Uniswap V2 refers to the difference between the expected price of a trade and the actual executed price due to market fluctuations or changes in liquidity between the time of the trade's initiation and its settlement.
 Uniswap V2 addresses slippage through its design and automated pricing mechanism, which relies on the constant product formula x * y = k to determine token prices based on the available liquidity in the pool.
 
@@ -70,6 +72,7 @@ By using this mechanism, Uniswap V2 aims to minimize slippage by ensuring that t
 Please examine the mint function in the UniswapV2Pair contract. Upon initial liquidity minting, a minimum liquidity is subtracted. What is the rationale behind this design?
 
 > Solution
+
 Preventing Zero or Near-Zero Liquidity Adds: By subtracting a minimum liquidity value (MINIMUM_LIQUIDITY) upon initial minting of liquidity tokens, Uniswap V2 discourages users from creating extremely small or negligible liquidity positions. This minimum threshold ensures that liquidity providers contribute a meaningful amount of liquidity to the pool, which is essential for maintaining efficient trading and price discovery.
 
 Establishing a Base Liquidity Floor: The MINIMUM_LIQUIDITY value acts as a base liquidity floor that all liquidity providers must surpass when adding liquidity for the first time. This helps in maintaining a healthy liquidity pool where each position has a reasonable size relative to the overall pool size.
@@ -84,6 +87,7 @@ In summary, the subtraction of a minimum liquidity value during the initial mint
 Investigate the minting function in the UniswapV2Pair contract. When depositing tokens (not for the first time), liquidity can only be obtained using a specific formula. What is the intention behind this?
 
 > Solution
+
 The intention behind the specific formula used when depositing tokens into the UniswapV2Pair contract (not for the first time) is to ensure that the liquidity shares provided by the user accurately reflect the proportional ownership of the token pair within the liquidity pool. This formula is designed to maintain the constant product invariant of the Uniswap V2 automated market maker (AMM) model.
 
 Here's the rationale and intention explained step-by-step:
@@ -102,6 +106,7 @@ In summary, the intention behind using a specific formula for calculating liquid
 What is a sandwich attack, and how might it impact you when initiating a swap?
 
 > Solution
+
 A sandwich attack is a type of front-running exploit that occurs in decentralized exchanges (DEXs) like Uniswap. In this attack, the malicious actor (the attacker) inserts their own transactions before and after a target transaction (initiated by another user), taking advantage of the predictable order of transactions in the Ethereum mempool.
 
 Here's how a sandwich attack works and its potential impact:
