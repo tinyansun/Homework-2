@@ -48,25 +48,25 @@ Here's how Uniswap V2 addresses slippage and maintains efficient pricing:
 
 3. Impact of Trade Size: When a trade is executed on Uniswap V2, the reserves of the tokens in the pool change based on the trade size. Larger trades can cause greater slippage because they move the price as they are executed due to the constant product formula.
 
-Here's a simplified example of how Uniswap V2 calculates the output amount and addresses slippage:
+For example, consider the function `swapExactTokensForTokens` in Uniswap V2:
 
+```solidity
+function swapExactTokensForTokens(
+uint amountIn,
+uint amountOutMin,
+address[] calldata path,
+address to,
+uint deadline
+) external returns (uint[] memory amounts);
+```
 
-function getAmountOut(uint amountIn, uint reserveIn, uint reserveOut) internal pure returns (uint amountOut) {
-    require(amountIn > 0, "UniswapV2: INSUFFICIENT_INPUT_AMOUNT");
-    require(reserveIn > 0 && reserveOut > 0, "UniswapV2: INSUFFICIENT_LIQUIDITY");
-    uint amountInWithFee = amountIn * 997;
-    uint numerator = amountInWithFee * reserveOut;
-    uint denominator = reserveIn * 1000 + amountInWithFee;
-    amountOut = numerator / denominator;
-}
+- `amountIn`: The amount of input tokens that the user is trading.
+- `amountOutMin`: The minimum amount of output tokens that the user is willing to accept.
+- `path`: An array of token addresses which the trade will go through.
+- `to`: The address that will receive the output tokens.
+- `deadline`: A timestamp by which the trade must be completed, to ensure the trade is not executed too far in the future.
 
-
-In this function:
-
-amountIn: The amount of the input token being swapped.
-reserveIn: The amount of the input token (e.g., ETH) in the liquidity pool.
-reserveOut: The amount of the output token (e.g., DAI) in the liquidity pool.
-The getAmountOut function calculates the expected output amount (amountOut) based on the input amount, reserve amounts, and the constant product formula adjusted for a 0.3% fee (997 / 1000).
+Here, `amountOutMin` plays a crucial role. If the actual amount of output tokens that can be received is less than `amountOutMin` due to slippage, the transaction will fail. This parameter allows users to control their maximum acceptable slippage.
 
 By using this mechanism, Uniswap V2 aims to minimize slippage by ensuring that traders receive an output amount that closely matches their expectations, factoring in the liquidity available in the pool and the impact of the trade size on the pool's reserves. However, large trades relative to the pool size can still result in significant slippage, especially in less liquid markets.
 
